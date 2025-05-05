@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container-reservations
+    environment:
+      MYSQL_ROOT_PASSWORD: "root@123"
+      MYSQL_DATABASE: LittleLemon
+      MYSQL_USER: admindjango
+      MYSQL_PASSWORD: "employee@123!"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - /etc/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net-database
+  # minha-app:  # Substitua pelo nome do seu serviço Python
+  #   build: .  # Ou use image: sua-imagem-python
+  #   volumes:
+  #     - .:/app
+  #   working_dir: /app
+  #   command: python manage.py runserver 0.0.0.0:8000  # Exemplo para Django
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - net-database
+
+
+volumes:
+  mysql_data:
+
+
+networks:
+  net-database:
+
+
