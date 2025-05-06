@@ -1,4 +1,4 @@
 from django.contrib import admin
 from . import models
 
-admin.site.register([models.booking, models.Menu])
+admin.site.register([models.Booking, models.Menu])
