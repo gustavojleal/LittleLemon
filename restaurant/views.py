@@ -1,12 +1,10 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import permissions
-from rest_framework import generics
-from rest_framework import response  
-from django.http import HttpResponse
-from django.views.generic import TemplateView
 from django.contrib.auth.models import User
-from rest_framework import viewsets as viewssets
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView
 from datetime import datetime
+from rest_framework import permissions, generics, response
+from rest_framework import viewsets as viewssets
 from .models import Booking, Menu
 from .serialazers import BookingSerializer, MenuSerializer, UserSerializer
 
@@ -34,12 +32,14 @@ class AboutView(TemplateView):
 
      
 class BookingViewSet(viewssets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated] 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    # permission_classes = [permissions.IsAuthenticated] 
 
       
 class MenuItemsView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
     def get(self, request, *args, **kwargs):

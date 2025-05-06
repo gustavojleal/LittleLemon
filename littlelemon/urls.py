@@ -25,6 +25,8 @@ router.register(r'tables', views.BookingViewSet, basename='tables')
 
 urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
     path('api/', include('restaurant.urls')),
