@@ -1,34 +1,44 @@
+
+from django.contrib.auth import login
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import TemplateView
-from datetime import datetime
 from rest_framework import permissions, generics, response
 from rest_framework import viewsets as viewssets
 from .models import Booking, Menu
 from .serialazers import BookingSerializer, MenuSerializer, UserSerializer
+from .forms import CustomUserCreationForm
 
 
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+            return redirect('home')
+        return render(request, 'index.html', {
+            'form': form,
+            'show_signup_modal': True  
+        })
+    return redirect('home')
+
+              
 class UserViewSet(viewssets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class IndexView(TemplateView):
     template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):  # Corrigido: 'self' como primeiro argumento
-        context = super().get_context_data(**kwargs)
-        context['current_year'] = datetime.now().year
-        return context
-      
-
-class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("<h1>Welcome to the Home Page</h1>")
-      
+        return render(request, 'index.html')
+
+
 class AboutView(TemplateView):
+
+    template_name = 'about.html'
     def get(self, request, *args, **kwargs):
-        return HttpResponse("<h1>Welcome to the About Page</h1>")
+        return render(request, 'about.html')
 
      
 class BookingViewSet(viewssets.ModelViewSet):
@@ -39,7 +49,7 @@ class BookingViewSet(viewssets.ModelViewSet):
       
 class MenuItemsView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
     def get(self, request, *args, **kwargs):
@@ -55,9 +65,14 @@ class MenuItemsView(generics.ListCreateAPIView):
         return response.Response(serializer.errors, status=400)
         
 class SingleMenuItemView(generics.DestroyAPIView):
+      permission_classes = [permissions.IsAuthenticatedOrReadOnly]
       serializer_class = MenuSerializer
       def get(self, request, *args, **kwargs):
           pk = kwargs['pk']
           menu_item = get_object_or_404(Menu, pk=pk)
           serializer = MenuSerializer(menu_item)
           return response.Response(serializer.data)
+      def delete(self, request, *args, **kwargs):
+          menu_item = get_object_or_404(Menu, pk=kwargs['pk'])
+          menu_item.delete()
+          return response.Response(status=204)

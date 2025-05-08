@@ -1,0 +1,12 @@
+<nav>
+  <ul>
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'about' %}">About</a></li>
+    <li><a href="{% url 'menu' %}">Menu</a></li>
+    <li><a href="{% url 'booking-list' %}">Book</a></li>
+    <li><button id="login" type="button" data-modal-target="#loginModal">Login</button></li>
+    <li><button id="signup" type="button" data-modal-target="#signupModal">Sign Up</button></li>
+  </ul>
+</nav>
+{% include 'partials/_signup.html' %}
+{% include 'partials/_login.html' %}
