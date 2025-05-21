@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
     'restaurant',
+    'django_extensions',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'littlelemon.urls'
@@ -148,17 +153,28 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": False,  
     "SEND_ACTIVATION_EMAIL": False,      
     "SERIALIZERS": {
-        "user_create": "djoser.serializers.UserCreateSerializer",  
+        "user_create": "restaurant.serialazers.CustomerUserCreateSerializer",  
         "user": "djoser.serializers.UserSerializer",              
     },
 }
 
 REST_FRAMEWORK = {
+  "DEFAULT_RENDERER_CLASSES": [
+    'rest_framework.renderers.JSONRenderer',
+  ],
   "DEFAULT_AUTHENTICATION_CLASSES": [
     "rest_framework.authentication.TokenAuthentication",
     # "rest_framework.authentication.SessionAuthentication",
   ],
 }
 
+CORS_ORIGIN_WHITELIST = [
+  'http://localhost:8000',
+  'http://localhost:3000',
+]
 LOGIN_REDIRECT_URL = 'home'
 
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
+
+APPEND_SLASH = False

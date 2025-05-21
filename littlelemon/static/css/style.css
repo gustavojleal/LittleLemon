@@ -20,6 +20,50 @@
   position: relative;
 }
 
+/* Container dos botões - Adicione estas propriedades */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  width: 100%;
+  justify-content: space-between;
+  /* ou space-evenly */
+  /* Ocupa toda a largura disponível */
+}
+
+/* Classe base para os botões - Corrija estas propriedades */
+.btn {
+  padding: 0.5rem 2rem;
+  /* Aumente o padding horizontal */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border: 1px solid #dee2e6;
+  /* Remova width e height fixos */
+  min-width: 100px;
+  /* Largura mínima para consistência */
+  transition: all 0.3s ease;
+  flex: 1;
+  /* Ocupa espaço igualitário */
+  max-width: 200px;
+  /* Limite máximo opcional */
+  /* Efeito suave ao interagir */
+}
+
+.yes-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.no-btn {
+  background: #f8f9fa;
+  color: #333;
+}
+
+/* Botão de fechar mantenha como está */
 .modal-close {
   position: absolute;
   top: 1rem;
@@ -28,7 +72,14 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
 }
+
 
 .form-group {
   margin-bottom: 1rem;
@@ -50,10 +101,6 @@
   color: #dc3545;
   font-size: 0.875rem;
   margin-top: 0.25rem;
-  padding: 5px;
-  border-radius: 4px;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
 }
 
 .btn-primary {

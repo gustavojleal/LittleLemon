@@ -1,7 +1,22 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+
+class CustomUserAuthenticationForm(AuthenticationForm):
+    password = forms.CharField(
+        label="Password",
+        help_text="Minimum 8 characters. Cannot be a common or all-numeric password."
+    )
+
+    class Meta:
+        model = User
+        fields = ("username", "password")
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        return cleaned_data    
 
 
 class CustomUserCreationForm(UserCreationForm):

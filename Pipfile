@@ -9,6 +9,8 @@ mysqlclient = "*"
 djangorestframework = "*"
 django-debug-toolbar = "*"
 djoser = "*"
+django-cors-headers = "*"
+django-extensions = "*"
 
 [dev-packages]
 

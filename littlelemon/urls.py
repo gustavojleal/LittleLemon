@@ -17,17 +17,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from restaurant.views import signup
+from django.db import models
+from restaurant.views import signup, login, custom_logout, get_csrf_token, MenuItemsView, BookingViewSet
 
-
-
+print('sdfasdjfaskdjfaskdjf')
 urlpatterns = [
-    path('signup/', signup, name='signup'),
+    path('api/v1/menu/', MenuItemsView.as_view(), name='menu_items'),
+    path('api/v1/booking/', BookingViewSet.as_view(), name='booking'),
+    path('get-csrf-token/', get_csrf_token, name='get_csrf_token'),
+    path('api/v1/auth/users', signup, name='signup'),
+    path('api/v1/auth/login', login, name='login'),
+    path('api/v1/auth/logout', custom_logout, name='custom_logout'),
+    
     path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls.authtoken')),
-    path('auth/', include('djoser.urls'), name='auth_token_login'),
     
     path('restaurant/', include('restaurant.urls')),
-    path('api/', include('restaurant.urls')),
+    path('', include('restaurant.urls')),
 
 ]
