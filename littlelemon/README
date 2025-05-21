@@ -1,0 +1,46 @@
+# Little Lemon Restaurant API
+
+![Django REST Framework](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
+![Pytest](https://img.shields.io/badge/Pytest-3.0%2B-blue)
+
+A RESTful API for managing restaurant operations, including menu items, table bookings, and user authentication. Built with Django REST Framework.
+
+---
+
+## Table of Contents
+- [API Endpoints](#api-endpoints)
+- [Testing with Insomnia](#testing-with-insomnia)
+- [Testing with Pytest](#testing-with-pytest)
+- [Project Setup](#project-setup)
+- [Key Features](#key-features)
+- [Dependencies](#dependencies)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## API Endpoints
+
+| Endpoint                | Method | Description                     | Auth Required |
+|-------------------------|--------|---------------------------------|---------------|
+| `/auth/token/login/`    | POST   | Get authentication token        | No            |
+| `/api/menu/`            | GET    | List all menu items             | Yes           |
+| `/api/menu/`            | POST   | Create new menu item (Admin)    | Yes           |
+| `/api/booking/`         | GET    | List bookings                   | Yes           |
+| `/api/booking/`         | POST   | Create new booking              | Yes           |
+| `/signup/`              | POST   | Register new user               | No            |
+
+---
+
+## Testing with Insomnia
+
+[![Run in Insomnia](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Little%20Lemon&uri=https%3A%2F%2Fexample.com%2Finsomnia.json)
+
+### 1. Get Authentication Token
+```http
+POST http://localhost:8000/auth/token/login/
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
